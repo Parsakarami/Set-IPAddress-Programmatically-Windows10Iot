@@ -11,22 +11,12 @@ using System.IO;
 
 namespace WindowsIotInternalServiceConsumer
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             this.InitializeComponent();
-            this.Loaded += MainPage_Loaded;
         }
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
         private async void ChangeIPAddress(string ipAddress)
         {
@@ -37,10 +27,8 @@ namespace WindowsIotInternalServiceConsumer
              "Basic",
              Convert.ToBase64String(
              System.Text.ASCIIEncoding.ASCII.GetBytes(
-                 string.Format("{0}:{1}", "administrator", "p@ssw0rd"))));
+                 string.Format("{0}:{1}", "administrator", "YourPassword"))));
 
-            //var x = await client.GetStringAsync("api/filesystem/apps/knownfolders");
-            //var xx = await client.PostAsync("api/control/restart", null);
             NetworkConfiguration networkConfiguration = new NetworkConfiguration()
             {
                 AdapterName = "{CF2A43ED-F038-4411-BB0D-EA71D5604B5E}",
@@ -52,9 +40,8 @@ namespace WindowsIotInternalServiceConsumer
             };
             string json = JsonConvert.SerializeObject(networkConfiguration);
             HttpContent content = new StringContent(json);
-            var xxz = await client.PutAsync("api/networking/ipv4config", content);
+            var result = await client.PutAsync("api/networking/ipv4config", content);
         }
-
 
         public class NetworkConfiguration
         {
@@ -94,12 +81,6 @@ namespace WindowsIotInternalServiceConsumer
             {
                 return "127.0.0.1";
             }
-
-        }
-
-        private void btn_UploadPacakge_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
